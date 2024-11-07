@@ -13,7 +13,7 @@ def get_threads(page, page_size):
              LIMIT ? OFFSET ?"""
     limit = page_size
     offset = page_size * (page - 1)
-    return db.query(sql, [page_size, offset])
+    return db.query(sql, [limit, offset])
 
 def get_thread(id):
     sql = "SELECT id, title FROM threads WHERE id = ?"
