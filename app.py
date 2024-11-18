@@ -79,8 +79,9 @@ def new_message():
 
     try:
         forum.add_message(content, user_id, thread_id)
-    except:
+    except sqlite3.IntegrityError:
         abort(403)
+
     return redirect("/thread/" + str(thread_id))
 
 @app.route("/edit/<int:message_id>", methods=["GET", "POST"])
@@ -134,9 +135,10 @@ def register():
         if password1 != password2:
             return "VIRHE: salasanat eivät ole samat"
 
-        if users.create_user(username, password1):
+        try:
+            users.create_user(username, password1):
             return "Tunnus luotu"
-        else:
+        except sqlite3.IntegrityError:
             return "VIRHE: tunnus on jo varattu"
 
 @app.route("/login", methods=["GET", "POST"])
