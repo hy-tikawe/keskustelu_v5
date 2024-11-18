@@ -1,4 +1,4 @@
-import math, secrets
+import math, secrets, sqlite3
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
 import config, forum, users
@@ -136,7 +136,7 @@ def register():
             return "VIRHE: salasanat eivät ole samat"
 
         try:
-            users.create_user(username, password1):
+            users.create_user(username, password1)
             return "Tunnus luotu"
         except sqlite3.IntegrityError:
             return "VIRHE: tunnus on jo varattu"
